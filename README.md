@@ -18,6 +18,7 @@ GET localhost:8080/cart/ - prints the contents of the cart
 GET localhost:8080/cart/price - prints the total price of the cart
 
 POST localhost:8080/cart/add - adds item to cart
+
 Body:
 ```
 {
@@ -27,6 +28,7 @@ Body:
 ```
 
 PATCH localhost:8080/cart/remove - removes 1 item from the cart - if there are 10 from the same type - 9 of them are left after this operaton
+
 Body:
 ```
 {
