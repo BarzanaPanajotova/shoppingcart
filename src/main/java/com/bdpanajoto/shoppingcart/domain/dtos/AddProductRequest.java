@@ -4,9 +4,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class AddProductRequest {
-    @NotBlank
+    @NotBlank(message = "ProductId can not be null or blank!")
     private String productId;
-    @Min(1)
+    @Min(value = 1, message = "Count must be larger than 1")
     private long count;
 
     public String getProductId() {

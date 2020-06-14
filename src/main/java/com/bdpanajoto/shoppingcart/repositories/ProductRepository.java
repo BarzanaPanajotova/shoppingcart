@@ -14,8 +14,12 @@ public class ProductRepository {
     private static final List<ProductDTO> PRODUCTS = Collections.unmodifiableList(
             Arrays.asList(
                     new ProductDTO("P001", "Bread", BigDecimal.valueOf(1.2)),
-                    new ProductDTO("P002", "Orange juice", BigDecimal.valueOf(3.6)),
-                    new ProductDTO("P003", "Pork meat", BigDecimal.valueOf(10.6))));
+                    new ProductDTO("P002", "Orange juice 1L", BigDecimal.valueOf(3.6)),
+                    new ProductDTO("P003", "Pork meat 1kg", BigDecimal.valueOf(10.6)),
+                    new ProductDTO("P004", "Salmon fillet 1kg", BigDecimal.valueOf(32.48)),
+                    new ProductDTO("P005", "Napkins Belana 100pc", BigDecimal.valueOf(4.24)),
+                    new ProductDTO("P006", "Mayonnaise 200g", BigDecimal.valueOf(2.3))
+            ));
 
     public List<ProductDTO> getProducts() {
         return PRODUCTS;

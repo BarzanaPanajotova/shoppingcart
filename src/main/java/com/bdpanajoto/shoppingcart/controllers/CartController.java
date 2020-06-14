@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cart")
@@ -44,7 +46,7 @@ public class CartController {
 
     @GetMapping(value = "/price",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public BigDecimal getPrice() {
-        return this.cartService.calculatePrice();
+    public Map<String,BigDecimal> getPrice() {
+        return Collections.singletonMap("totalPrice", this.cartService.calculatePrice());
     }
 }

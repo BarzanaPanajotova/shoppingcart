@@ -10,3 +10,27 @@ As an end user of the shopping cart I would like to:
 Note: Implement only the business logic part. No need for UIs
 
 Implement REST APIs for this requirements
+
+API:
+GET localhost:8080/cart/ - prints the contents of the cart
+
+GET localhost:8080/cart/price - prints the total price of the cart
+
+POST localhost:8080/cart/add - adds item to cart
+Body:
+```
+{
+    "productId":"P001",
+    "count": 10
+}
+```
+
+PATCH localhost:8080/cart/remove - removes 1 item from the cart - if there are 10 from the same type - 9 of them are left after this operaton
+Body:
+```
+{
+    "productId":"P001"
+}
+```
+
+GET localhost:8080/products - prints the types of products and their prices

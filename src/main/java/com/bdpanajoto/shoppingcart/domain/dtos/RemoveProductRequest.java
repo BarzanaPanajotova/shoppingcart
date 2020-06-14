@@ -3,7 +3,7 @@ package com.bdpanajoto.shoppingcart.domain.dtos;
 import javax.validation.constraints.NotBlank;
 
 public class RemoveProductRequest {
-    @NotBlank
+    @NotBlank(message = "ProductId can not be null or blank")
     private String productId;
 
     public String getProductId() {
