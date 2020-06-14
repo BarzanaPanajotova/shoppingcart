@@ -12,6 +12,7 @@ Note: Implement only the business logic part. No need for UIs
 Implement REST APIs for this requirements
 
 API:
+
 GET localhost:8080/cart/ - prints the contents of the cart
 
 GET localhost:8080/cart/price - prints the total price of the cart
