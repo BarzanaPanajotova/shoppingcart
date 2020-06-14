@@ -18,6 +18,7 @@ import java.util.HashMap;
 @SpringBootTest
 public class CartServiceTest {
 
+    public static final String PRODUCT_ID = "P001";
     @MockBean
     private ProductService productService;
 
@@ -40,9 +41,9 @@ public class CartServiceTest {
     @Test
     public void shouldAddProduct() {
         ProductDTO productDTO = new ProductDTO();
-        Mockito.when(productService.getById("P001")).thenReturn(productDTO);
+        Mockito.when(productService.getById(PRODUCT_ID)).thenReturn(productDTO);
 
-        cartService.addProduct("P001", 2);
+        cartService.addProduct(PRODUCT_ID, 2);
 
         Mockito.verify(cartRepository).addItem(productDTO, 2);
     }
@@ -57,9 +58,9 @@ public class CartServiceTest {
     @Test
     public void shouldRemoveProduct() {
         ProductDTO productDTO = new ProductDTO();
-        Mockito.when(productService.getById("P001")).thenReturn(productDTO);
+        Mockito.when(productService.getById(PRODUCT_ID)).thenReturn(productDTO);
 
-        cartService.removeProduct("P001");
+        cartService.removeProduct(PRODUCT_ID);
 
         Mockito.verify(cartRepository).removeItem(productDTO);
     }

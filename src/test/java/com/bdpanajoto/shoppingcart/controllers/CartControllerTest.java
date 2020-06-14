@@ -21,53 +21,59 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CartController.class)
 public class CartControllerTest extends AbstractControllerTest{
 
+    public static final String CART_URL = "/cart";
+    public static final String CART_ADD_URL = "/cart/add";
+    public static final String CART_REMOVE_URL = "/cart/remove";
+    public static final String CART_PRICE_URL = "/cart/price";
+    public static final String PRODUCT_ID = "P001";
+
     @MockBean
     private CartService service;
 
     @Test
     public void shouldReturnCartFromService() throws Exception {
         Mockito.when(this.service.getCart()).thenReturn(new CartDTO(null));
-        super.mvc.perform(get("/cart")).andDo(print()).andExpect(status().isOk())
+        super.mvc.perform(get(CART_URL)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(equalTo("{\"products\":null}")));
     }
 
     @Test
     public void givenServiceThrowsException_shouldThrowInternalServerError() throws Exception {
         Mockito.when(this.service.getCart()).thenThrow(new RuntimeException());
-        super.mvc.perform(get("/cart")).andDo(print()).andExpect(status().isInternalServerError());
+        super.mvc.perform(get(CART_URL)).andDo(print()).andExpect(status().isInternalServerError());
     }
 
     @Test
     public void shouldAddProductToCart() throws Exception {
         AddProductRequest addProductRequest = new AddProductRequest();
-        addProductRequest.setProductId("P001");
+        addProductRequest.setProductId(PRODUCT_ID);
         addProductRequest.setCount(2);
-        super.mvc.perform(post("/cart/add").contentType(MediaType.APPLICATION_JSON)
+        super.mvc.perform(post(CART_ADD_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(addProductRequest))).andDo(print()).andExpect(status().isOk());
-        Mockito.verify(this.service).addProduct("P001", 2);
+        Mockito.verify(this.service).addProduct(PRODUCT_ID, 2);
     }
 
     @Test
     public void given0Count_shouldNotAddProductToCart() throws Exception {
         AddProductRequest addProductRequest = new AddProductRequest();
-        addProductRequest.setProductId("P001");
+        addProductRequest.setProductId(PRODUCT_ID);
         addProductRequest.setCount(0);
-        super.mvc.perform(post("/cart/add").contentType(MediaType.APPLICATION_JSON)
+        super.mvc.perform(post(CART_ADD_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(addProductRequest))).andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldRemoveProductFromCart() throws Exception {
         RemoveProductRequest removeProductRequest = new RemoveProductRequest();
-        removeProductRequest.setProductId("P001");
-        super.mvc.perform(patch("/cart/remove").contentType(MediaType.APPLICATION_JSON)
+        removeProductRequest.setProductId(PRODUCT_ID);
+        super.mvc.perform(patch(CART_REMOVE_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(removeProductRequest))).andDo(print()).andExpect(status().isOk());
-        Mockito.verify(this.service).removeProduct("P001");
+        Mockito.verify(this.service).removeProduct(PRODUCT_ID);
     }
 
     @Test
     public void shouldGetCartPrice() throws Exception {
-        super.mvc.perform(get("/cart/price")).andDo(print()).andExpect(status().isOk());
+        super.mvc.perform(get(CART_PRICE_URL)).andDo(print()).andExpect(status().isOk());
         Mockito.verify(this.service).calculatePrice();
     }
 }

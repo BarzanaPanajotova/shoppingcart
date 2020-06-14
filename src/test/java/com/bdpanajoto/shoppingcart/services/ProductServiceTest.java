@@ -19,6 +19,7 @@ import java.util.List;
 @SpringBootTest
 public class ProductServiceTest {
 
+    public static final String PRODUCT_ID = "P001";
     @MockBean
     private ProductRepository productRepository;
 
@@ -28,7 +29,7 @@ public class ProductServiceTest {
     @Test
     public void shouldReturnRepositoryProducts() {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId("P001");
+        productDTO.setId(PRODUCT_ID);
         productDTO.setPrice(BigDecimal.TEN);
         List<ProductDTO> list = Arrays.asList(productDTO);
         Mockito.when(productRepository.getProducts()).thenReturn(list);
@@ -43,13 +44,22 @@ public class ProductServiceTest {
     @Test
     public void shouldReturnProductFromRepositoryById(){
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId("P001");
+        productDTO.setId(PRODUCT_ID);
         productDTO.setPrice(BigDecimal.TEN);
-        Mockito.when(productRepository.getById("P001")).thenReturn(productDTO);
+        Mockito.when(productRepository.getById(PRODUCT_ID)).thenReturn(productDTO);
 
-        ProductDTO result = productService.getById("P001");
+        ProductDTO result = productService.getById(PRODUCT_ID);
 
         Assert.assertNotNull(result);
         Assert.assertEquals(productDTO, result);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void givenEmptyId_shouldNotReturnProductFromRepositoryById(){
+        Mockito.when(productRepository.getById("")).thenThrow(new IllegalArgumentException());
+
+        ProductDTO result = productService.getById("");
+
+        Assert.assertNotNull(result);
     }
 }

@@ -39,8 +39,7 @@ public class CartRepositoryTest {
 
     @Test
     public void shouldAddItem() {
-        ProductDTO product = new ProductDTO();
-        product.setPrice(BigDecimal.ONE);
+        ProductDTO product = getProductDTO();
 
         cartRepository.addItem(product, 1);
         cartRepository.addItem(product, 3);
@@ -58,9 +57,7 @@ public class CartRepositoryTest {
 
     @Test
     public void shouldRemoveItem() {
-        ProductDTO product = new ProductDTO();
-        product.setName("REM");
-        product.setPrice(BigDecimal.ONE);
+        ProductDTO product = getProductDTO();
         cartRepository.addItem(product, 1);
         Map<ProductDTO, Long> cart = cartRepository.getCart();
         Assert.assertTrue(cart.containsKey(product));
@@ -73,32 +70,45 @@ public class CartRepositoryTest {
 
     @Test
     public void givenTenItems_shouldCalculatePriceWithDiscount() {
-        ProductDTO product = new ProductDTO();
+        ProductDTO product = getProductDTO();
         product.setPrice(BigDecimal.TEN);
         cartRepository.addItem(product, 10);
 
-        Assert.assertEquals(BigDecimal.valueOf(90).setScale(2), cartRepository.calculatePrice());
+        BigDecimal result = cartRepository.calculatePrice();
+
+        Assert.assertEquals(BigDecimal.valueOf(90).setScale(2), result);
     }
 
     @Test
     public void givenPriceLargerThan100000_shouldCalculatePriceWithDiscount() {
-        ProductDTO product = new ProductDTO();
+        ProductDTO product = getProductDTO();
         product.setPrice(BigDecimal.valueOf(100001));
         cartRepository.addItem(product, 1);
-
-        ProductDTO second = new ProductDTO();
+        ProductDTO second = getProductDTO();
         second.setPrice(BigDecimal.valueOf(20.6));
         cartRepository.addItem(second, 3);
 
-        Assert.assertEquals(BigDecimal.valueOf(90056.52).setScale(2), cartRepository.calculatePrice());
+        BigDecimal result = cartRepository.calculatePrice();
+
+        Assert.assertEquals(BigDecimal.valueOf(90056.52).setScale(2), result);
     }
 
     @Test
     public void givenTenItemsAndPriceLargerThan100000_shouldCalculatePriceWithDiscount() {
-        ProductDTO product = new ProductDTO();
+        ProductDTO product = getProductDTO();
         product.setPrice(BigDecimal.valueOf(100001));
         cartRepository.addItem(product, 10);
 
-        Assert.assertEquals(BigDecimal.valueOf(810008.10).setScale(2), cartRepository.calculatePrice());
+        BigDecimal result = cartRepository.calculatePrice();
+
+        Assert.assertEquals(BigDecimal.valueOf(810008.10).setScale(2), result);
+    }
+
+    private ProductDTO getProductDTO() {
+        ProductDTO product = new ProductDTO();
+        product.setId("P001");
+        product.setName("Milk");
+        product.setPrice(BigDecimal.ONE);
+        return product;
     }
 }
