@@ -22,7 +22,7 @@ public class ProductRepositoryTest {
         List<ProductDTO> list = productRepository.getProducts();
 
         Assert.assertNotNull(list);
-        Assert.assertEquals(3, list.size());
+        Assert.assertEquals(6, list.size());
     }
 
     @Test(expected = IllegalArgumentException.class)
