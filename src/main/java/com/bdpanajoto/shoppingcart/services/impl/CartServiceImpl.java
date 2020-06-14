@@ -8,6 +8,7 @@ import com.bdpanajoto.shoppingcart.services.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class CartServiceImpl implements CartService {
     public CartDTO getCart() {
         return new CartDTO(
                 cartRepository.getCart().entrySet().stream()
-                        .collect(Collectors.toMap(key -> key.getKey().getId(), value -> value.getValue())));
+                        .collect(Collectors.toMap(key -> key.getKey().getId(), Map.Entry::getValue)));
     }
 
     @Override

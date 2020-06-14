@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> getProducts() {
-        return this.productRepository.getProducts().stream().map(x -> toProductDTO(x)).collect(Collectors.toList());
+        return this.productRepository.getProducts().stream().map(this::toProductDTO).collect(Collectors.toList());
     }
 
     private ProductDTO toProductDTO(ProductDTO product) {
