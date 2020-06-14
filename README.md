@@ -35,3 +35,6 @@ Body:
 ```
 
 GET localhost:8080/products - prints the types of products and their prices
+
+
+To run the application run ShoppingCartApplication.java
